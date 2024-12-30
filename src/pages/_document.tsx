@@ -1,24 +1,9 @@
-import {
-  documentGetInitialProps,
-  DocumentHeadTags,
-  DocumentHeadTagsProps,
-} from '@mui/material-nextjs/v15-pagesRouter';
-import {
-  DocumentContext,
-  DocumentProps,
-  Head,
-  Html,
-  Main,
-  NextScript,
-} from 'next/document';
+import { Head, Html, Main, NextScript } from 'next/document';
 
-export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
+export default function Document() {
   return (
     <Html lang='en'>
-      <Head>
-        <meta name='emotion-insertion-point' content='' />
-        <DocumentHeadTags {...props} />
-      </Head>
+      <Head />
       <body>
         <Main />
         <NextScript />
@@ -26,8 +11,3 @@ export default function Document(props: DocumentProps & DocumentHeadTagsProps) {
     </Html>
   );
 }
-
-Document.getInitialProps = async (ctx: DocumentContext) => {
-  const finalProps = await documentGetInitialProps(ctx);
-  return finalProps;
-};

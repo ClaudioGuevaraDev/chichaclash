@@ -1,23 +1,15 @@
-import { ThemeProvider } from '@emotion/react';
-import { CssBaseline } from '@mui/material';
-import { AppCacheProvider } from '@mui/material-nextjs/v13-pagesRouter';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
+import 'primereact/resources/themes/lara-dark-amber/theme.css';
+import '@/styles/globals.css';
 
-import { theme } from '@/utils/theme';
+import type { AppProps } from 'next/app';
+import { PrimeReactProvider } from 'primereact/api';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
-    <AppCacheProvider {...props}>
-      <Head>
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
-      </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </AppCacheProvider>
+    <PrimeReactProvider>
+      <Component {...pageProps} />
+    </PrimeReactProvider>
   );
 }

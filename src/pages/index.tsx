@@ -1,77 +1,64 @@
-import {
-  Autocomplete,
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Stack,
-  TextField,
-} from '@mui/material';
+import { Avatar } from 'primereact/avatar';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { MultiSelect } from 'primereact/multiselect';
 
 import { champs } from '@/utils/champs';
 
+const ROLES = ['TOP', 'JUNGLE', 'MID', 'ADC', 'SUPPORT'];
+
 function Home() {
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
       }}
     >
-      <Card sx={{ width: '100%', maxWidth: 400 }}>
-        <CardContent>
-          <Stack spacing={2}>
-            <Autocomplete
-              renderInput={(params) => <TextField {...params} label='TOP' />}
+      <Card
+        style={{
+          width: '100%',
+          maxWidth: '24rem',
+        }}
+      >
+        {ROLES.map((role) => (
+          <div key={role}>
+            <MultiSelect
+              placeholder={role}
               options={champs}
-              renderOption={(props, option) => {
-                const { key, ...optionProps } = props;
-                return (
-                  <Box
-                    key={key}
-                    component='li'
-                    sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                    {...optionProps}
-                  >
-                    <Avatar
-                      src={`/champs/${option.label.toLowerCase()}.webp`}
-                      alt={option.label}
-                      sx={{ mr: 2 }}
-                    />
-                    {option.label}
-                  </Box>
-                );
-              }}
-            />
-            <Autocomplete
-              options={[]}
-              renderInput={(params) => <TextField {...params} label='JUNGLE' />}
-            />
-            <Autocomplete
-              options={[]}
-              renderInput={(params) => <TextField {...params} label='MID' />}
-            />
-            <Autocomplete
-              options={[]}
-              renderInput={(params) => <TextField {...params} label='ADC' />}
-            />
-            <Autocomplete
-              options={[]}
-              renderInput={(params) => (
-                <TextField {...params} label='SUPPORT' />
+              itemTemplate={(option) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Avatar
+                    shape='circle'
+                    image={`/champs/${option.label.toLowerCase()}.webp`}
+                  />
+                  <p>{option.label}</p>
+                </div>
               )}
+              display='chip'
+              filter
+              style={{ width: '100%', marginTop: role !== 'TOP' ? '1rem' : 0 }}
+              virtualScrollerOptions={{ itemSize: 50 }}
             />
-          </Stack>
+          </div>
+        ))}
 
-          <Button variant='outlined' sx={{ marginTop: '1rem', width: '100%' }}>
-            CLASH
-          </Button>
-        </CardContent>
+        <Button
+          label='CLASH'
+          className='mt-4'
+          style={{ marginTop: '1.5rem', width: '100%' }}
+          size='small'
+        />
       </Card>
-    </Box>
+    </div>
   );
 }
 
