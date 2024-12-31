@@ -1,0 +1,48 @@
+.container {
+  padding: 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.title {
+  text-wrap: balance;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+
+.description {
+  text-wrap: pretty;
+  text-align: center;
+  color: #9ca3af;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  max-width: 25rem;
+  margin: -1rem auto 0;
+}
+
+.clash_container {
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .title {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .description {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    max-width: 100%;
+  }
+
+  .clash_container {
+    padding-top: 3rem;
+  }
+}

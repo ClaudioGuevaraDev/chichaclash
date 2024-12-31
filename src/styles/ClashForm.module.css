@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  max-width: 24rem;
+}
+
+.form_container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mode_label {
+  margin-left: -0.5rem;
+}
+
+.item_template {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.multi_select {
+  width: 100%;
+}
+
+.submit_button {
+  width: 100%;
+  margin-top: 1.5rem;
+}
