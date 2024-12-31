@@ -45,13 +45,13 @@ function Home() {
         padding: 16,
       }}
     >
-      <form onSubmit={handleSubmit}>
-        <Card
-          style={{
-            width: '100%',
-            maxWidth: '24rem',
-          }}
-        >
+      <Card
+        style={{
+          width: '100%',
+          maxWidth: '24rem',
+        }}
+      >
+        <form onSubmit={handleSubmit}>
           <div
             style={{
               display: 'flex',
@@ -203,8 +203,8 @@ function Home() {
             type='submit'
             loading={loading}
           />
-        </Card>
-      </form>
+        </form>
+      </Card>
     </div>
   );
 }
