@@ -1,13 +1,40 @@
 import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
+import { Dropdown } from 'primereact/dropdown';
+import { FloatLabel } from 'primereact/floatlabel';
 import { MultiSelect } from 'primereact/multiselect';
+import { FormEvent, useState } from 'react';
 
+import { ModesEnum, RolesEnum } from '@/enums/clash';
 import { champs } from '@/utils/champs';
 
-const ROLES = ['TOP', 'JUNGLE', 'MID', 'ADC', 'SUPPORT'];
-
 function Home() {
+  const [selectedMode, setSelectedMode] = useState(ModesEnum.BATIDORA);
+  const [selectedChamps, setSelectedChamps] = useState({
+    batidora: null,
+    rol: {
+      top: null,
+      jungle: null,
+      mid: null,
+      adc: null,
+      support: null,
+    },
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    console.log(selectedChamps);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
   return (
     <div
       style={{
@@ -15,19 +42,49 @@ function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         height: '100vh',
+        padding: 16,
       }}
     >
-      <Card
-        style={{
-          width: '100%',
-          maxWidth: '24rem',
-        }}
-      >
-        {ROLES.map((role) => (
-          <div key={role}>
+      <form onSubmit={handleSubmit}>
+        <Card
+          style={{
+            width: '100%',
+            maxWidth: '24rem',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              marginBottom: '1rem',
+            }}
+          >
+            <FloatLabel>
+              <Dropdown
+                placeholder='Modo'
+                options={Object.values(ModesEnum)}
+                value={selectedMode}
+                onChange={(e) => setSelectedMode(e.value)}
+                inputId='mode'
+              />
+              <label htmlFor='mode' style={{ marginLeft: '-0.5rem' }}>
+                Modo
+              </label>
+            </FloatLabel>
+          </div>
+
+          {selectedMode === ModesEnum.BATIDORA && (
             <MultiSelect
-              placeholder={role}
               options={champs}
+              placeholder='Selecciona tus campeones'
+              value={selectedChamps.batidora}
+              onChange={(e) =>
+                setSelectedChamps({
+                  ...selectedChamps,
+                  batidora: e.value,
+                })
+              }
               itemTemplate={(option) => (
                 <div
                   style={{
@@ -45,19 +102,109 @@ function Home() {
               )}
               display='chip'
               filter
-              style={{ width: '100%', marginTop: role !== 'TOP' ? '1rem' : 0 }}
+              style={{
+                width: '100%',
+              }}
               virtualScrollerOptions={{ itemSize: 50 }}
             />
-          </div>
-        ))}
+          )}
 
-        <Button
-          label='CLASH'
-          className='mt-4'
-          style={{ marginTop: '1.5rem', width: '100%' }}
-          size='small'
-        />
-      </Card>
+          {selectedMode === ModesEnum.POR_ROL &&
+            Object.values(RolesEnum).map((role) => (
+              <div key={role}>
+                <MultiSelect
+                  options={champs}
+                  placeholder={role}
+                  value={
+                    role === RolesEnum.TOP
+                      ? selectedChamps.rol.top
+                      : role === RolesEnum.JUNGLE
+                        ? selectedChamps.rol.jungle
+                        : role === RolesEnum.MID
+                          ? selectedChamps.rol.mid
+                          : role === RolesEnum.ADC
+                            ? selectedChamps.rol.adc
+                            : selectedChamps.rol.support
+                  }
+                  onChange={(e) => {
+                    if (role === RolesEnum.TOP) {
+                      setSelectedChamps({
+                        ...selectedChamps,
+                        rol: {
+                          ...selectedChamps.rol,
+                          top: e.value,
+                        },
+                      });
+                    } else if (role === RolesEnum.JUNGLE) {
+                      setSelectedChamps({
+                        ...selectedChamps,
+                        rol: {
+                          ...selectedChamps.rol,
+                          jungle: e.value,
+                        },
+                      });
+                    } else if (role === RolesEnum.MID) {
+                      setSelectedChamps({
+                        ...selectedChamps,
+                        rol: {
+                          ...selectedChamps.rol,
+                          mid: e.value,
+                        },
+                      });
+                    } else if (role === RolesEnum.ADC) {
+                      setSelectedChamps({
+                        ...selectedChamps,
+                        rol: {
+                          ...selectedChamps.rol,
+                          adc: e.value,
+                        },
+                      });
+                    } else if (role === RolesEnum.SUPPORT) {
+                      setSelectedChamps({
+                        ...selectedChamps,
+                        rol: {
+                          ...selectedChamps.rol,
+                          support: e.value,
+                        },
+                      });
+                    }
+                  }}
+                  itemTemplate={(option) => (
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.75rem',
+                      }}
+                    >
+                      <Avatar
+                        shape='circle'
+                        image={`/champs/${option.label.toLowerCase()}.webp`}
+                      />
+                      <p>{option.label}</p>
+                    </div>
+                  )}
+                  display='chip'
+                  filter
+                  style={{
+                    width: '100%',
+                    marginTop: role === RolesEnum.TOP ? 0 : 16,
+                  }}
+                  virtualScrollerOptions={{ itemSize: 50 }}
+                />
+              </div>
+            ))}
+
+          <Button
+            label='CLASH'
+            className='mt-4'
+            style={{ marginTop: '1.5rem', width: '100%' }}
+            size='small'
+            type='submit'
+            loading={loading}
+          />
+        </Card>
+      </form>
     </div>
   );
 }
