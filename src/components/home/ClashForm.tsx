@@ -6,15 +6,15 @@ import { FloatLabel } from 'primereact/floatlabel';
 import { MultiSelect } from 'primereact/multiselect';
 import { FormEvent, useState } from 'react';
 
-import { ModesEnum, RolesEnum, ScreenEnum } from '@/enums/clash';
+import { ModesEnum, RolesEnum } from '@/enums/clash';
 import styles from '@/styles/ClashForm.module.css';
 import { champs } from '@/utils/champs';
 
 interface Props {
-  setScreen: (value: ScreenEnum) => void;
+  setTeams: (value: string[][]) => void;
 }
 
-function ClashForm({ setScreen }: Props) {
+function ClashForm({ setTeams }: Props) {
   const [selectedMode, setSelectedMode] = useState(ModesEnum.BATIDORA);
   const [selectedChamps, setSelectedChamps] = useState({
     batidora: null,
@@ -31,13 +31,18 @@ function ClashForm({ setScreen }: Props) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setTeams([]);
     setLoading(true);
 
-    console.log(selectedChamps);
-
     setTimeout(() => {
+      setTeams([
+        ['garen', 'lee sin', 'ryze', 'ashe', 'nami'],
+        ['mordekaiser', 'elise', 'leblanc', 'varus', 'braum'],
+        ['darius', 'jarvan iv', 'sylas', 'tristana', 'lulu'],
+        ['urgot', 'viego', 'twisted fate', 'caitlyn', 'bardo'],
+      ]);
+
       setLoading(false);
-      setScreen(ScreenEnum.CLASH);
     }, 2000);
   };
 

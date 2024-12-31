@@ -1,8 +1,3 @@
-export enum ScreenEnum {
-  FORM = 'FORM',
-  CLASH = 'CLASH',
-}
-
 export enum RolesEnum {
   TOP = 'TOP',
   JUNGLE = 'JUNGLE',

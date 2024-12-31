@@ -27,7 +27,15 @@
 .clash_container {
   display: flex;
   align-items: center;
-  padding-top: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.teams_container {
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+  gap: 1rem;
 }
 
 @media (min-width: 640px) {
@@ -40,9 +48,5 @@
     font-size: 1.125rem;
     line-height: 1.75rem;
     max-width: 100%;
-  }
-
-  .clash_container {
-    padding-top: 3rem;
   }
 }
